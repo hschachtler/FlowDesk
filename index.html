@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Version 2.9.0 -->
-  <title>FlowDesk – Workflow-System v2.9.0</title>
+  <!-- Version 3.0.0 -->
+  <title>FlowDesk – Workflow-System v3.0.0</title>
   <script>
 window.__supabaseLib=(function(e){function t(e,t){var n={};for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&t.indexOf(r)<0&&(n[r]=e[r]);if(e!=null&&typeof Object.getOwnPropertySymbols==`function`)for(var i=0,r=Object.getOwnPropertySymbols(e);i<r.length;i++)t.indexOf(r[i])<0&&Object.prototype.propertyIsEnumerable.call(e,r[i])&&(n[r[i]]=e[r[i]]);return n}function n(e,t,n,r){function i(e){return e instanceof n?e:new n(function(t){t(e)})}return new(n||=Promise)(function(n,a){function o(e){try{c(r.next(e))}catch(e){a(e)}}function s(e){try{c(r.throw(e))}catch(e){a(e)}}function c(e){e.done?n(e.value):i(e.value).then(o,s)}c((r=r.apply(e,t||[])).next())})}let r=e=>e?(...t)=>e(...t):(...e)=>fetch(...e);var i=class extends Error{constructor(e,t=`FunctionsError`,n){super(e),this.name=t,this.context=n}toJSON(){return{name:this.name,message:this.message,context:this.context}}},a=class extends i{constructor(e){super(`Failed to send a request to the Edge Function`,`FunctionsFetchError`,e)}},o=class extends i{constructor(e){super(`Relay Error invoking the Edge Function`,`FunctionsRelayError`,e)}},s=class extends i{constructor(e){super(`Edge Function returned a non-2xx status code`,`FunctionsHttpError`,e)}},c;(function(e){e.Any=`any`,e.ApNortheast1=`ap-northeast-1`,e.ApNortheast2=`ap-northeast-2`,e.ApSouth1=`ap-south-1`,e.ApSoutheast1=`ap-southeast-1`,e.ApSoutheast2=`ap-southeast-2`,e.CaCentral1=`ca-central-1`,e.EuCentral1=`eu-central-1`,e.EuWest1=`eu-west-1`,e.EuWest2=`eu-west-2`,e.EuWest3=`eu-west-3`,e.SaEast1=`sa-east-1`,e.UsEast1=`us-east-1`,e.UsWest1=`us-west-1`,e.UsWest2=`us-west-2`})(c||={});var l=class{constructor(e,{headers:t={},customFetch:n,region:i=c.Any}={}){this.url=e,this.headers=t,this.region=i,this.fetch=r(n)}setAuth(e){this.headers.Authorization=`Bearer ${e}`}invoke(e){return n(this,arguments,void 0,function*(e,t={}){let n,r;try{let{headers:i,method:c,body:l,signal:u,timeout:d}=t,f={},{region:p}=t;p||=this.region;let m=new URL(`${this.url}/${e}`);p&&p!==`any`&&(f[`x-region`]=p,m.searchParams.set(`forceFunctionRegion`,p));let h;l&&(i&&!Object.prototype.hasOwnProperty.call(i,`Content-Type`)||!i)?typeof Blob<`u`&&l instanceof Blob||l instanceof ArrayBuffer?(f[`Content-Type`]=`application/octet-stream`,h=l):typeof l==`string`?(f[`Content-Type`]=`text/plain`,h=l):typeof FormData<`u`&&l instanceof FormData?h=l:(f[`Content-Type`]=`application/json`,h=JSON.stringify(l)):h=l&&typeof l!=`string`&&!(typeof Blob<`u`&&l instanceof Blob)&&!(l instanceof ArrayBuffer)&&!(typeof FormData<`u`&&l instanceof FormData)?JSON.stringify(l):l;let ee=u;d&&(r=new AbortController,n=setTimeout(()=>r.abort(),d),u?(ee=r.signal,u.addEventListener(`abort`,()=>r.abort())):ee=r.signal);let g=yield this.fetch(m.toString(),{method:c||`POST`,headers:Object.assign(Object.assign(Object.assign({},f),this.headers),i),body:h,signal:ee}).catch(e=>{throw new a(e)}),te=g.headers.get(`x-relay-error`);if(te&&te===`true`)throw new o(g);if(!g.ok)throw new s(g);let _=(g.headers.get(`Content-Type`)??`text/plain`).split(`;`)[0].trim(),ne;return ne=_===`application/json`?yield g.json():_===`application/octet-stream`||_===`application/pdf`?yield g.blob():_===`text/event-stream`?g:_===`multipart/form-data`?yield g.formData():yield g.text(),{data:ne,error:null,response:g}}catch(e){return{data:null,error:e,response:e instanceof s||e instanceof o?e.context:void 0}}finally{n&&clearTimeout(n)}})}};let u=e=>Math.min(1e3*2**e,3e4),d=[520,503],f=[`GET`,`HEAD`,`OPTIONS`];var p=class extends Error{constructor(e){super(e.message),this.name=`PostgrestError`,this.details=e.details,this.hint=e.hint,this.code=e.code}toJSON(){return{name:this.name,message:this.message,details:this.details,hint:this.hint,code:this.code}}};function m(e,t){return new Promise(n=>{if(t?.aborted){n();return}let r=setTimeout(()=>{t?.removeEventListener(`abort`,i),n()},e);function i(){clearTimeout(r),n()}t?.addEventListener(`abort`,i)})}function h(e,t,n,r){return!(!r||n>=3||!f.includes(e)||!d.includes(t))}var ee=class{constructor(e){this.shouldThrowOnError=!1,this.retryEnabled=!0,this.method=e.method,this.url=e.url,this.headers=new Headers(e.headers),this.schema=e.schema,this.body=e.body,this.shouldThrowOnError=e.shouldThrowOnError??!1,this.signal=e.signal,this.isMaybeSingle=e.isMaybeSingle??!1,this.shouldStripNulls=e.shouldStripNulls??!1,this.urlLengthLimit=e.urlLengthLimit??8e3,this.retryEnabled=e.retry??!0,e.fetch?this.fetch=e.fetch:this.fetch=fetch}throwOnError(){return this.shouldThrowOnError=!0,this}stripNulls(){if(this.headers.get(`Accept`)===`text/csv`)throw Error(`stripNulls() cannot be used with csv()`);return this.shouldStripNulls=!0,this}setHeader(e,t){return this.headers=new Headers(this.headers),this.headers.set(e,t),this}retry(e){return this.retryEnabled=e,this}then(e,t){var n=this;if(this.schema===void 0||([`GET`,`HEAD`].includes(this.method)?this.headers.set(`Accept-Profile`,this.schema):this.headers.set(`Content-Profile`,this.schema)),this.method!==`GET`&&this.method!==`HEAD`&&this.headers.set(`Content-Type`,`application/json`),this.shouldStripNulls){let e=this.headers.get(`Accept`);e===`application/vnd.pgrst.object+json`?this.headers.set(`Accept`,`application/vnd.pgrst.object+json;nulls=stripped`):(!e||e===`application/json`)&&this.headers.set(`Accept`,`application/vnd.pgrst.array+json;nulls=stripped`)}let r=this.fetch,i=(async()=>{let e=0;for(;;){let t=new Headers(n.headers);e>0&&t.set(`X-Retry-Count`,String(e));let i;try{i=await r(n.url.toString(),{method:n.method,headers:t,body:JSON.stringify(n.body),signal:n.signal})}catch(t){if(t?.name===`AbortError`||t?.code===`ABORT_ERR`||!f.includes(n.method))throw t;if(n.retryEnabled&&e<3){let t=u(e);e++,await m(t,n.signal);continue}throw t}if(h(n.method,i.status,e,n.retryEnabled)){let t=i.headers?.get(`Retry-After`)??null,r=t===null?u(e):Math.max(0,parseInt(t,10)||0)*1e3;await i.text(),e++,await m(r,n.signal);continue}return await n.processResponse(i)}})();return this.shouldThrowOnError||(i=i.catch(e=>{let t=``,n=``,r=``,i=e?.cause;if(i){let n=i?.message??``,r=i?.code??``;t=`${e?.name??`FetchError`}: ${e?.message}`,t+=`\n\nCaused by: ${i?.name??`Error`}: ${n}`,r&&(t+=` (${r})`),i?.stack&&(t+=`\n${i.stack}`)}else t=e?.stack??``;let a=this.url.toString().length;return e?.name===`AbortError`||e?.code===`ABORT_ERR`?(r=``,n=`Request was aborted (timeout or manual cancellation)`,a>this.urlLengthLimit&&(n+=`. Note: Your request URL is ${a} characters, which may exceed server limits. If selecting many fields, consider using views. If filtering with large arrays (e.g., .in('id', [many IDs])), consider using an RPC function to pass values server-side.`)):(i?.name===`HeadersOverflowError`||i?.code===`UND_ERR_HEADERS_OVERFLOW`)&&(r=``,n=`HTTP headers exceeded server limits (typically 16KB)`,a>this.urlLengthLimit&&(n+=`. Your request URL is ${a} characters. If selecting many fields, consider using views. If filtering with large arrays (e.g., .in('id', [200+ IDs])), consider using an RPC function instead.`)),{success:!1,error:{message:`${e?.name??`FetchError`}: ${e?.message}`,details:t,hint:n,code:r},data:null,count:null,status:0,statusText:``}})),i.then(e,t)}async processResponse(e){var t=this;let n=null,r=null,i=null,a=e.status,o=e.statusText;if(e.ok){if(t.method!==`HEAD`){let n=await e.text();n===``||(r=t.headers.get(`Accept`)===`text/csv`||t.headers.get(`Accept`)&&t.headers.get(`Accept`)?.includes(`application/vnd.pgrst.plan+text`)?n:JSON.parse(n))}let s=t.headers.get(`Prefer`)?.match(/count=(exact|planned|estimated)/),c=e.headers.get(`content-range`)?.split(`/`);s&&c&&c.length>1&&(i=parseInt(c[1])),t.isMaybeSingle&&Array.isArray(r)&&(r.length>1?(n={code:`PGRST116`,details:`Results contain ${r.length} rows, application/vnd.pgrst.object+json requires 1 row`,hint:null,message:`JSON object requested, multiple (or no) rows returned`},r=null,i=null,a=406,o=`Not Acceptable`):r=r.length===1?r[0]:null)}else{let i=await e.text();try{n=JSON.parse(i),Array.isArray(n)&&e.status===404&&(r=[],n=null,a=200,o=`OK`)}catch{e.status===404&&i===``?(a=204,o=`No Content`):n={message:i}}if(n&&t.shouldThrowOnError)throw new p(n)}return{success:n===null,error:n,data:r,count:i,status:a,statusText:o}}returns(){return this}overrideTypes(){return this}},g=class extends ee{select(e){let t=!1,n=(e??`*`).split(``).map(e=>/\s/.test(e)&&!t?``:(e===`"`&&(t=!t),e)).join(``);return this.url.searchParams.set(`select`,n),this.headers.append(`Prefer`,`return=representation`),this}order(e,{ascending:t=!0,nullsFirst:n,foreignTable:r,referencedTable:i=r}={}){let a=i?`${i}.order`:`order`,o=this.url.searchParams.get(a);return this.url.searchParams.set(a,`${o?`${o},`:``}${e}.${t?`asc`:`desc`}${n===void 0?``:n?`.nullsfirst`:`.nullslast`}`),this}limit(e,{foreignTable:t,referencedTable:n=t}={}){let r=n===void 0?`limit`:`${n}.limit`;return this.url.searchParams.set(r,`${e}`),this}range(e,t,{foreignTable:n,referencedTable:r=n}={}){let i=r===void 0?`offset`:`${r}.offset`,a=r===void 0?`limit`:`${r}.limit`;return this.url.searchParams.set(i,`${e}`),this.url.searchParams.set(a,`${t-e+1}`),this}abortSignal(e){return this.signal=e,this}single(){return this.headers.set(`Accept`,`application/vnd.pgrst.object+json`),this}maybeSingle(){return this.isMaybeSingle=!0,this}csv(){return this.headers.set(`Accept`,`text/csv`),this}geojson(){return this.headers.set(`Accept`,`application/geo+json`),this}explain({analyze:e=!1,verbose:t=!1,settings:n=!1,buffers:r=!1,wal:i=!1,format:a=`text`}={}){let o=[e?`analyze`:null,t?`verbose`:null,n?`settings`:null,r?`buffers`:null,i?`wal`:null].filter(Boolean).join(`|`),s=this.headers.get(`Accept`)??`application/json`;return this.headers.set(`Accept`,`application/vnd.pgrst.plan+${a}; for="${s}"; options=${o};`),this}rollback(){return this.headers.append(`Prefer`,`tx=rollback`),this}returns(){return this}maxAffected(e){return this.headers.append(`Prefer`,`handling=strict`),this.headers.append(`Prefer`,`max-affected=${e}`),this}};let te=RegExp(`[,()]`);var _=class extends g{eq(e,t){return this.url.searchParams.append(e,`eq.${t}`),this}neq(e,t){return this.url.searchParams.append(e,`neq.${t}`),this}gt(e,t){return this.url.searchParams.append(e,`gt.${t}`),this}gte(e,t){return this.url.searchParams.append(e,`gte.${t}`),this}lt(e,t){return this.url.searchParams.append(e,`lt.${t}`),this}lte(e,t){return this.url.searchParams.append(e,`lte.${t}`),this}like(e,t){return this.url.searchParams.append(e,`like.${t}`),this}likeAllOf(e,t){return this.url.searchParams.append(e,`like(all).{${t.join(`,`)}}`),this}likeAnyOf(e,t){return this.url.searchParams.append(e,`like(any).{${t.join(`,`)}}`),this}ilike(e,t){return this.url.searchParams.append(e,`ilike.${t}`),this}ilikeAllOf(e,t){return this.url.searchParams.append(e,`ilike(all).{${t.join(`,`)}}`),this}ilikeAnyOf(e,t){return this.url.searchParams.append(e,`ilike(any).{${t.join(`,`)}}`),this}regexMatch(e,t){return this.url.searchParams.append(e,`match.${t}`),this}regexIMatch(e,t){return this.url.searchParams.append(e,`imatch.${t}`),this}is(e,t){return this.url.searchParams.append(e,`is.${t}`),this}isDistinct(e,t){return this.url.searchParams.append(e,`isdistinct.${t}`),this}in(e,t){let n=Array.from(new Set(t)).map(e=>typeof e==`string`&&te.test(e)?`"${e}"`:`${e}`).join(`,`);return this.url.searchParams.append(e,`in.(${n})`),this}notIn(e,t){let n=Array.from(new Set(t)).map(e=>typeof e==`string`&&te.test(e)?`"${e}"`:`${e}`).join(`,`);return this.url.searchParams.append(e,`not.in.(${n})`),this}contains(e,t){return typeof t==`string`?this.url.searchParams.append(e,`cs.${t}`):Array.isArray(t)?this.url.searchParams.append(e,`cs.{${t.join(`,`)}}`):this.url.searchParams.append(e,`cs.${JSON.stringify(t)}`),this}containedBy(e,t){return typeof t==`string`?this.url.searchParams.append(e,`cd.${t}`):Array.isArray(t)?this.url.searchParams.append(e,`cd.{${t.join(`,`)}}`):this.url.searchParams.append(e,`cd.${JSON.stringify(t)}`),this}rangeGt(e,t){return this.url.searchParams.append(e,`sr.${t}`),this}rangeGte(e,t){return this.url.searchParams.append(e,`nxl.${t}`),this}rangeLt(e,t){return this.url.searchParams.append(e,`sl.${t}`),this}rangeLte(e,t){return this.url.searchParams.append(e,`nxr.${t}`),this}rangeAdjacent(e,t){return this.url.searchParams.append(e,`adj.${t}`),this}overlaps(e,t){return typeof t==`string`?this.url.searchParams.append(e,`ov.${t}`):this.url.searchParams.append(e,`ov.{${t.join(`,`)}}`),this}textSearch(e,t,{config:n,type:r}={}){let i=``;r===`plain`?i=`pl`:r===`phrase`?i=`ph`:r===`websearch`&&(i=`w`);let a=n===void 0?``:`(${n})`;return this.url.searchParams.append(e,`${i}fts${a}.${t}`),this}match(e){return Object.entries(e).filter(([e,t])=>t!==void 0).forEach(([e,t])=>{this.url.searchParams.append(e,`eq.${t}`)}),this}not(e,t,n){return this.url.searchParams.append(e,`not.${t}.${n}`),this}or(e,{foreignTable:t,referencedTable:n=t}={}){let r=n?`${n}.or`:`or`;return this.url.searchParams.append(r,`(${e})`),this}filter(e,t,n){return this.url.searchParams.append(e,`${t}.${n}`),this}},ne=class{constructor(e,{headers:t={},schema:n,fetch:r,urlLengthLimit:i=8e3,retry:a}){this.url=e,this.headers=new Headers(t),this.schema=n,this.fetch=r,this.urlLengthLimit=i,this.retry=a}cloneRequestState(){return{url:new URL(this.url.toString()),headers:new Headers(this.headers)}}select(e,t){let{head:n=!1,count:r}=t??{},i=n?`HEAD`:`GET`,a=!1,o=(e??`*`).split(``).map(e=>/\s/.test(e)&&!a?``:(e===`"`&&(a=!a),e)).join(``),{url:s,headers:c}=this.cloneRequestState();return s.searchParams.set(`select`,o),r&&c.append(`Prefer`,`count=${r}`),new _({method:i,url:s,headers:c,schema:this.schema,fetch:this.fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}insert(e,{count:t,defaultToNull:n=!0}={}){let{url:r,headers:i}=this.cloneRequestState();if(t&&i.append(`Prefer`,`count=${t}`),n||i.append(`Prefer`,`missing=default`),Array.isArray(e)){let t=e.reduce((e,t)=>e.concat(Object.keys(t)),[]);if(t.length>0){let e=[...new Set(t)].map(e=>`"${e}"`);r.searchParams.set(`columns`,e.join(`,`))}}return new _({method:`POST`,url:r,headers:i,schema:this.schema,body:e,fetch:this.fetch??fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}upsert(e,{onConflict:t,ignoreDuplicates:n=!1,count:r,defaultToNull:i=!0}={}){let{url:a,headers:o}=this.cloneRequestState();if(o.append(`Prefer`,`resolution=${n?`ignore`:`merge`}-duplicates`),t!==void 0&&a.searchParams.set(`on_conflict`,t),r&&o.append(`Prefer`,`count=${r}`),i||o.append(`Prefer`,`missing=default`),Array.isArray(e)){let t=e.reduce((e,t)=>e.concat(Object.keys(t)),[]);if(t.length>0){let e=[...new Set(t)].map(e=>`"${e}"`);a.searchParams.set(`columns`,e.join(`,`))}}return new _({method:`POST`,url:a,headers:o,schema:this.schema,body:e,fetch:this.fetch??fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}update(e,{count:t}={}){let{url:n,headers:r}=this.cloneRequestState();return t&&r.append(`Prefer`,`count=${t}`),new _({method:`PATCH`,url:n,headers:r,schema:this.schema,body:e,fetch:this.fetch??fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}delete({count:e}={}){let{url:t,headers:n}=this.cloneRequestState();return e&&n.append(`Prefer`,`count=${e}`),new _({method:`DELETE`,url:t,headers:n,schema:this.schema,fetch:this.fetch??fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}};function re(e){"@babel/helpers - typeof";return re=typeof Symbol==`function`&&typeof Symbol.iterator==`symbol`?function(e){return typeof e}:function(e){return e&&typeof Symbol==`function`&&e.constructor===Symbol&&e!==Symbol.prototype?`symbol`:typeof e},re(e)}function ie(e,t){if(re(e)!=`object`||!e)return e;var n=e[Symbol.toPrimitive];if(n!==void 0){var r=n.call(e,t||`default`);if(re(r)!=`object`)return r;throw TypeError(`@@toPrimitive must return a primitive value.`)}return(t===`string`?String:Number)(e)}function ae(e){var t=ie(e,`string`);return re(t)==`symbol`?t:t+``}function oe(e,t,n){return(t=ae(t))in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function se(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),n.push.apply(n,r)}return n}function ce(e){for(var t=1;t<arguments.length;t++){var n=arguments[t]==null?{}:arguments[t];t%2?se(Object(n),!0).forEach(function(t){oe(e,t,n[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):se(Object(n)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))})}return e}var le=class e{constructor(e,{headers:t={},schema:n,fetch:r,timeout:i,urlLengthLimit:a=8e3,retry:o}={}){this.url=e,this.headers=new Headers(t),this.schemaName=n,this.urlLengthLimit=a;let s=r??globalThis.fetch;i!==void 0&&i>0?this.fetch=(e,t)=>{let n=new AbortController,r=setTimeout(()=>n.abort(),i),a=t?.signal;if(a){if(a.aborted)return clearTimeout(r),s(e,t);let i=()=>{clearTimeout(r),n.abort()};return a.addEventListener(`abort`,i,{once:!0}),s(e,ce(ce({},t),{},{signal:n.signal})).finally(()=>{clearTimeout(r),a.removeEventListener(`abort`,i)})}return s(e,ce(ce({},t),{},{signal:n.signal})).finally(()=>clearTimeout(r))}:this.fetch=s,this.retry=o}from(e){if(!e||typeof e!=`string`||e.trim()===``)throw Error(`Invalid relation name: relation must be a non-empty string.`);return new ne(new URL(`${this.url}/${e}`),{headers:new Headers(this.headers),schema:this.schemaName,fetch:this.fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}schema(t){return new e(this.url,{headers:this.headers,schema:t,fetch:this.fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}rpc(e,t={},{head:n=!1,get:r=!1,count:i}={}){let a,o=new URL(`${this.url}/rpc/${e}`),s,c=e=>typeof e==`object`&&!!e&&(!Array.isArray(e)||e.some(c)),l=n&&Object.values(t).some(c);l?(a=`POST`,s=t):n||r?(a=n?`HEAD`:`GET`,Object.entries(t).filter(([e,t])=>t!==void 0).map(([e,t])=>[e,Array.isArray(t)?`{${t.join(`,`)}}`:`${t}`]).forEach(([e,t])=>{o.searchParams.append(e,t)})):(a=`POST`,s=t);let u=new Headers(this.headers);return l?u.set(`Prefer`,i?`count=${i},return=minimal`:`return=minimal`):i&&u.set(`Prefer`,`count=${i}`),new _({method:a,url:o,headers:u,schema:this.schemaName,body:s,fetch:this.fetch??fetch,urlLengthLimit:this.urlLengthLimit,retry:this.retry})}},ue=class{constructor(){}static detectEnvironment(){if(typeof WebSocket<`u`)return{type:`native`,constructor:WebSocket};if(typeof globalThis<`u`&&globalThis.WebSocket!==void 0)return{type:`native`,constructor:globalThis.WebSocket};if(typeof global<`u`&&global.WebSocket!==void 0)return{type:`native`,constructor:global.WebSocket};if(typeof globalThis<`u`&&globalThis.WebSocketPair!==void 0&&globalThis.WebSocket===void 0)return{type:`cloudflare`,error:`Cloudflare Workers detected. WebSocket clients are not supported in Cloudflare Workers.`,workaround:`Use Cloudflare Workers WebSocket API for server-side WebSocket handling, or deploy to a different runtime.`};if(typeof globalThis<`u`&&globalThis.EdgeRuntime||typeof navigator<`u`&&navigator.userAgent?.includes(`Vercel-Edge`))return{type:`unsupported`,error:`Edge runtime detected (Vercel Edge/Netlify Edge). WebSockets are not supported in edge functions.`,workaround:`Use serverless functions or a different deployment target for WebSocket functionality.`};let e=globalThis.process;if(e){let t=e.versions;if(t&&t.node){let e=t.node,n=parseInt(e.replace(/^v/,``).split(`.`)[0]);return n>=22?globalThis.WebSocket===void 0?{type:`unsupported`,error:`Node.js ${n} detected but native WebSocket not found.`,workaround:`Provide a WebSocket implementation via the transport option.`}:{type:`native`,constructor:globalThis.WebSocket}:{type:`unsupported`,error:`Node.js ${n} detected without native WebSocket support.`,workaround:`For Node.js < 22, install "ws" package and provide it via the transport option:
 import ws from "ws"
@@ -1412,7 +1412,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
     }
   </style>
 </head>
-<body data-version="2.9.0">
+<body data-version="3.0.0">
 
 <!-- ============================================================
      LOGIN MODAL
@@ -1777,6 +1777,9 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
             <div class="form-group">
               <label class="form-label">Anon Key</label>
               <input class="form-input" id="cfg-key" type="password" placeholder="eyJ..." />
+            </div>
+            <div style="background:#fff8e1;border:1px solid #f59e0b;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#92400e;line-height:1.5">
+              ⚠️ <strong>Sicherheitshinweis:</strong> Der Anon-Key ist im Quelltext der HTML-Datei sichtbar. Stellen Sie sicher, dass <strong>Row Level Security (RLS)</strong> auf allen Supabase-Tabellen aktiviert ist (workflows, profiles, notifications, templates, template_steps, approvals, textblocks, user_preferences), damit unauthentifizierte Anfragen keine Daten lesen oder schreiben können.
             </div>
             <button class="btn btn-primary" onclick="saveConfig()">Verbindung speichern &amp; neu laden</button>
           </div>
@@ -2203,7 +2206,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
 // ============================================================
 //  VERSION
 // ============================================================
-const APP_VERSION = '2.9.0';
+const APP_VERSION = '3.0.0';
 
 // ── UUID v4 Generator ─────────────────────────────────────────
 function generateUUID() {
@@ -2217,8 +2220,11 @@ function generateUUID() {
   });
 }
 
-const DEFAULT_SUPABASE_URL  = "https://qklaxvfvgpymociubggx.supabase.co";   // z.B. https://xxxx.supabase.co
-const DEFAULT_SUPABASE_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrbGF4dmZ2Z3B5bW9jaXViZ2d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTY0MDQsImV4cCI6MjA5MTY5MjQwNH0.LqaGJSCQheekXeoMYO1FOdBteumKkINxkHKjvsK3sdo"; // eyJ...
+const DEFAULT_SUPABASE_URL  = "https://qklaxvfvgpymociubggx.supabase.co";
+// SICHERHEITSHINWEIS: Der anon-Key ist im Quelltext sichtbar.
+// Stellen Sie sicher, dass Row Level Security (RLS) auf ALLEN Tabellen aktiviert ist,
+// damit unauthentifizierte Requests keine Daten lesen oder schreiben können.
+const DEFAULT_SUPABASE_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrbGF4dmZ2Z3B5bW9jaXViZ2d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTY0MDQsImV4cCI6MjA5MTY5MjQwNH0.LqaGJSCQheekXeoMYO1FOdBteumKkINxkHKjvsK3sdo";
 
 // ============================================================
 //  GLOBALER STATE
@@ -2372,17 +2378,26 @@ async function initApp() {
   // 6. Textbausteine nachladen
   loadTextblocksFromSupabase();
 
-  // 7. Templates aus localStorage-Cache oder Demo-Daten
-  const savedTemplates = _loadLS('fg_templates');
-  if (savedTemplates && savedTemplates.length) {
-    appState.templates = savedTemplates;
-  } else {
-    appState.templates = DEMO_TEMPLATES;
-    _saveLS('fg_templates', appState.templates);
+  // 6b. Grid-Layout aus Supabase laden (user_preferences)
+  await _loadGridLayoutFromSupabase();
+
+  // 7. Templates aus Supabase laden (primär) – localStorage nur als Offline-Fallback
+  {
+    const synced = await _syncTemplatesFromSupabase();
+    if (!synced) {
+      const savedTemplates = _loadLS('fg_templates');
+      appState.templates = (savedTemplates && savedTemplates.length) ? savedTemplates : DEMO_TEMPLATES;
+      _saveLS('fg_templates', appState.templates);
+    }
   }
 
-  // 8. Workflows aus localStorage-Cache
-  appState.workflows = _loadLS('fg_workflows') || [];
+  // 8. Workflows direkt aus Supabase laden – localStorage nur als Offline-Fallback
+  {
+    const wfSynced = await _syncWorkflowsFromSupabase();
+    if (!wfSynced) {
+      appState.workflows = _loadLS('fg_workflows') || [];
+    }
+  }
 
   // 9. Login-Overlay ausblenden (falls es beim Laden zu sehen war)
   hideLoginOverlay();
@@ -2392,9 +2407,6 @@ async function initApp() {
 
   // 11. Realtime-Subscriptions aufbauen
   setupRealtime();
-
-  // 12. Supabase-Vollsync im Hintergrund
-  setTimeout(() => _syncFromSupabase(), 800);
 
   updateSyncStatus('ok');
 }
@@ -2466,7 +2478,7 @@ function _loadLS(key) {
 // ─── Supabase background sync (non-blocking, best-effort) ─────────────────
 async function _syncFromSupabase() {
   try {
-    // Verbindungstest: Timeout separat behandeln
+    // Verbindungstest mit Timeout
     let testResult = null;
     let timedOut = false;
     try {
@@ -2475,50 +2487,23 @@ async function _syncFromSupabase() {
         new Promise((_, r) => setTimeout(() => { timedOut = true; r(new Error('timeout')); }, 4000))
       ]);
     } catch(e) {
-      if (timedOut) {
-        console.log('ℹ️ Supabase Timeout – lokaler Modus aktiv');
-      } else {
-        console.log('ℹ️ Supabase nicht erreichbar – lokaler Modus aktiv');
-      }
+      console.log('ℹ️ Supabase nicht erreichbar – lokaler Modus aktiv');
       return;
     }
-
-    // Tabelle fehlt (z.B. 42P01 = undefined_table) → Demo-Modus, kein weiterer Sync
     if (testResult?.error) {
       const code = testResult.error.code || '';
-      if (code === '42P01' || code === 'PGRST116' || testResult.error.message?.includes('does not exist')) {
-        console.log('ℹ️ Supabase verbunden – Tabellen noch nicht angelegt, lokaler Modus aktiv');
+      if (code === '42P01' || /does not exist/i.test(testResult.error.message || '')) {
+        console.log('ℹ️ Supabase verbunden – Tabellen noch nicht angelegt');
       } else {
         console.log('ℹ️ Supabase Fehler:', testResult.error.message);
       }
       return;
     }
-
-    // Workflows laden
-    let wfResult;
-    try {
-      wfResult = await _sb.from('workflows').select('*, workflow_steps(*)').order('created_at', { ascending: false });
-    } catch(e) { wfResult = null; }
-    if (wfResult && !wfResult.error && wfResult.data && wfResult.data.length > 0) {
-      const tMap = Object.fromEntries(appState.templates.map(t => [t.id, t]));
-      appState.workflows = wfResult.data.map(wf => ({
-        ...wf,
-        template: tMap[wf.template_id],
-        steps: (wf.workflow_steps || []).sort((a,b) => a.step_order - b.step_order).map(ws => {
-          const ts = tMap[wf.template_id]?.steps?.find(s => s.step_order === ws.step_order);
-          return { ...ws, description: ts?.description||'', fields: ts?.fields||[], collected_data: ws.collected_data||{} };
-        }),
-        metadata: wf.metadata || {}
-      }));
-      _saveLS('fg_workflows', appState.workflows);
-    }
-
-    // Templates laden (nur wenn mehr als Demo vorhanden)
+    // Vollsync im Hintergrund (Templates + Workflows)
     await _syncTemplatesFromSupabase();
-
-    // UI aktualisieren wenn auf Dashboard
+    await _syncWorkflowsFromSupabase();
     renderDashboard();
-    console.log('✅ Supabase-Sync abgeschlossen');
+    console.log('✅ Hintergrund-Sync abgeschlossen');
   } catch(e) {
     console.log('ℹ️ Supabase nicht erreichbar – lokaler Modus aktiv');
   }
@@ -2540,6 +2525,43 @@ async function _syncTemplatesFromSupabase() {
     return true;
   }
   return false;
+}
+
+/** Workflows direkt aus Supabase laden – primäre Datenquelle, kein setTimeout-Delay */
+async function _syncWorkflowsFromSupabase() {
+  if (!_sb) return false;
+  try {
+    const result = await Promise.race([
+      _sb.from('workflows').select('*, workflow_steps(*)').order('created_at', { ascending: false }),
+      new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 6000))
+    ]);
+    if (!result || result.error) {
+      const code = result?.error?.code || '';
+      if (code === '42P01' || /does not exist/i.test(result?.error?.message || '')) {
+        console.log('ℹ️ workflows-Tabelle fehlt – lokaler Fallback');
+      } else {
+        console.warn('_syncWorkflowsFromSupabase:', result?.error?.message || 'timeout');
+      }
+      return false;
+    }
+    const tMap = Object.fromEntries(appState.templates.map(t => [t.id, t]));
+    appState.workflows = (result.data || []).map(wf => ({
+      ...wf,
+      template: tMap[wf.template_id],
+      steps: (wf.workflow_steps || [])
+        .sort((a, b) => a.step_order - b.step_order)
+        .map(ws => {
+          const ts = tMap[wf.template_id]?.steps?.find(s => s.step_order === ws.step_order);
+          return { ...ws, description: ts?.description || '', fields: ts?.fields || [], collected_data: ws.collected_data || {} };
+        }),
+      metadata: wf.metadata || {}
+    }));
+    _saveLS('fg_workflows', appState.workflows);
+    return true;
+  } catch(e) {
+    console.warn('_syncWorkflowsFromSupabase exception:', e.message);
+    return false;
+  }
 }
 
 /** v2.7.0: Textbausteine aus Supabase neu laden (für Realtime-Update) und Liste rendern, falls offen */
@@ -2786,6 +2808,16 @@ function setupRealtime() {
       .subscribe(status => _onRealtimeStatus('textblocks', status));
     _rtChannels.push(tbCh);
 
+    // 6. Profiles (v3.0.0): Benutzerliste team-weit synchron halten
+    const profilesCh = _sb.channel('rt-profiles')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'profiles',
+      }, handleRealtimeProfile)
+      .subscribe(status => _onRealtimeStatus('profiles', status));
+    _rtChannels.push(profilesCh);
+
     console.log('🔴 Realtime-Subscriptions aufgebaut für', userId);
   } catch(e) {
     console.warn('setupRealtime:', e.message);
@@ -2909,13 +2941,63 @@ function handleRealtimeWorkflowStep(payload) {
   } catch(e) { console.warn('handleRealtimeWorkflowStep:', e.message); }
 }
 
-/** Badge oder Login-Banner mit aktueller Notification-Zahl updaten */
-function _refreshNotificationBadge() {
+/** Eingehende Profil-Änderung – Benutzerliste team-weit aktuell halten */
+function handleRealtimeProfile(payload) {
   try {
-    if (typeof updateLoginNotification === 'function') {
-      updateLoginNotification();
+    const type = payload.eventType;
+    const row = payload.new || payload.old;
+    if (!row) return;
+    if (type === 'DELETE') {
+      appState.users = appState.users.filter(u => u.id !== row.id);
+    } else {
+      const idx = appState.users.findIndex(u => u.id === row.id);
+      if (idx >= 0) {
+        appState.users[idx] = { ...appState.users[idx], ...row };
+      } else {
+        appState.users.push(row);
+      }
+      // Eigenes Profil mitaktualisieren (z.B. Rolle-Änderung durch Admin)
+      if (appState.currentUser?.id === row.id) {
+        appState.currentUser = { ...appState.currentUser, ...row };
+        updateUserUI();
+      }
     }
-  } catch(e) {}
+    _saveLS('fg_users', appState.users);
+  } catch(e) { console.warn('handleRealtimeProfile:', e.message); }
+}
+
+/** Badge oder Login-Banner mit aktueller Notification-Zahl updaten – Supabase-first */
+async function _refreshNotificationBadge() {
+  try {
+    const userId = appState.currentUser?.id;
+    if (!userId) return;
+    let unreadCount = 0;
+    if (_sb) {
+      try {
+        const { data, error } = await _sb.from('notifications')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', userId)
+          .eq('read', false);
+        if (!error) {
+          // Supabase gibt count im Header zurück – data.length als Fallback
+          unreadCount = typeof data?.length === 'number' ? data.length : 0;
+        } else {
+          // Tabelle fehlt oder Fehler → lokaler Fallback
+          const local = _loadNotificationsLocal(userId);
+          unreadCount = local.filter(n => !n.read).length;
+        }
+      } catch(e) {
+        const local = _loadNotificationsLocal(userId);
+        unreadCount = local.filter(n => !n.read).length;
+      }
+    } else {
+      const local = _loadNotificationsLocal(userId);
+      unreadCount = local.filter(n => !n.read).length;
+    }
+    if (typeof updateLoginNotification === 'function') {
+      updateLoginNotification(unreadCount);
+    }
+  } catch(e) { console.warn('_refreshNotificationBadge:', e.message); }
 }
 
 /** Dashboard nur neu rendern wenn aktuell sichtbar */
@@ -3821,14 +3903,45 @@ function _getGridLayout() {
   } catch { return {}; }
 }
 
-function _saveGridLayout(layout) {
+async function _saveGridLayout(layout) {
   const uid = appState.currentUser?.id;
   if (!uid) return;
+  // 1. Sofort lokal speichern (kein UI-Lag)
   try {
     const all = JSON.parse(localStorage.getItem('fg_tmpl_grid') || '{}');
     all[uid] = layout;
     localStorage.setItem('fg_tmpl_grid', JSON.stringify(all));
   } catch {}
+  // 2. In Supabase persistieren (user_preferences-Tabelle)
+  if (_sb) {
+    try {
+      await _sb.from('user_preferences').upsert(
+        { user_id: uid, key: 'tmpl_grid', value: JSON.stringify(layout) },
+        { onConflict: 'user_id,key' }
+      );
+    } catch(e) {
+      // Tabelle noch nicht angelegt → still ignorieren (localStorage reicht als Fallback)
+      console.log('ℹ️ user_preferences nicht verfügbar – Grid nur lokal gespeichert');
+    }
+  }
+}
+
+/** Grid-Layout beim Start aus Supabase laden und lokalen Cache aktualisieren */
+async function _loadGridLayoutFromSupabase() {
+  const uid = appState.currentUser?.id;
+  if (!uid || !_sb) return;
+  try {
+    const { data, error } = await _sb.from('user_preferences')
+      .select('value').eq('user_id', uid).eq('key', 'tmpl_grid').maybeSingle();
+    if (!error && data?.value) {
+      const layout = JSON.parse(data.value);
+      const all = JSON.parse(localStorage.getItem('fg_tmpl_grid') || '{}');
+      all[uid] = layout;
+      localStorage.setItem('fg_tmpl_grid', JSON.stringify(all));
+    }
+  } catch(e) {
+    // Tabelle nicht vorhanden oder Parsefehler → lokaler Fallback bleibt
+  }
 }
 
 // Legacy stubs (no-ops, keep for compat)
@@ -3946,7 +4059,7 @@ function slotDragLeave(e) {
   e.currentTarget.closest('.tmpl-slot')?.classList.remove('drag-over');
 }
 
-function slotDrop(e, targetSlot) {
+async function slotDrop(e, targetSlot) {
   e.preventDefault();
   e.stopPropagation();
   if (!_tmplDragSrcId) return;
@@ -3970,18 +4083,18 @@ function slotDrop(e, targetSlot) {
   }
 
   layout[_tmplDragSrcId] = targetSlot;
-  _saveGridLayout(layout);
+  await _saveGridLayout(layout);
   renderTemplates();
 }
 
-function shelfDrop(e) {
+async function shelfDrop(e) {
   e.preventDefault();
   e.stopPropagation();
   if (!_tmplDragSrcId) return;
 
   const layout = _getGridLayout();
   delete layout[_tmplDragSrcId];
-  _saveGridLayout(layout);
+  await _saveGridLayout(layout);
   renderTemplates();
 }
 
@@ -6646,7 +6759,7 @@ function closeTextblockModal() {
   _editingTextblock = null;
 }
 
-function saveTextblock() {
+async function saveTextblock() {
   const name     = document.getElementById('tb-name').value.trim();
   const category = document.getElementById('tb-category').value.trim();
   const subject  = document.getElementById('tb-subject').value.trim();
@@ -6656,8 +6769,25 @@ function saveTextblock() {
 
   const blocks  = loadTextblocks();
   const isNew   = !_editingTextblock;
-  const tbId    = _editingTextblock?.id || 'tb-' + Date.now();
+  const tbId    = _editingTextblock?.id || 'tb-' + generateUUID();
   const tbData  = { id: tbId, name, category, subject, body };
+
+  // Supabase-first
+  if (_sb) {
+    try {
+      const { error } = await _sb.from('textblocks').upsert(
+        { id: tbId, name, category: category || 'Allgemein', subject, body },
+        { onConflict: 'id' }
+      );
+      if (error) {
+        showToast('⚠️ Supabase-Fehler: ' + error.message, 'error');
+        return;
+      }
+    } catch(e) {
+      showToast('⚠️ Fehler: ' + e.message, 'error');
+      return;
+    }
+  }
 
   if (isNew) {
     blocks.push(tbData);
@@ -6665,20 +6795,26 @@ function saveTextblock() {
     const idx = blocks.findIndex(b => b.id === tbId);
     if (idx >= 0) blocks[idx] = tbData;
   }
-
   saveTextblocks(blocks);
   showToast(`Baustein „${name}" ${isNew ? 'erstellt' : 'aktualisiert'} ✓`, 'success');
   closeTextblockModal();
   renderTextblocksList();
 }
 
-function deleteCurrentTextblock() {
+async function deleteCurrentTextblock() {
   if (!_editingTextblock) return;
   if (!confirm(`Textbaustein „${_editingTextblock.name}" wirklich löschen?`)) return;
   const deletingId = _editingTextblock.id;
+
+  if (_sb) {
+    try {
+      const { error } = await _sb.from('textblocks').delete().eq('id', deletingId);
+      if (error) { console.warn('deleteTextblock:', error.message); }
+    } catch(e) { console.warn('deleteTextblock:', e.message); }
+  }
+
   const blocks = loadTextblocks().filter(b => b.id !== deletingId);
   saveTextblocks(blocks);
-  if (_sb) { _sb.from('textblocks').delete().eq('id', deletingId).then(({error}) => { if(error) console.warn('deleteTextblock:', error.message); }); }
   showToast('Textbaustein gelöscht.', 'info');
   closeTextblockModal();
   renderTextblocksList();
@@ -7080,23 +7216,28 @@ async function doLogin() {
     updateTopbarSelect();
     renderUserSwitcher();
 
-    // Templates/Workflows aus Cache
-    const savedTemplates = _loadLS('fg_templates');
-    if (savedTemplates && savedTemplates.length) {
-      appState.templates = savedTemplates;
-    } else {
-      appState.templates = DEMO_TEMPLATES;
-      _saveLS('fg_templates', appState.templates);
+    // Templates direkt aus Supabase laden, Fallback auf localStorage/Demo
+    {
+      const synced = await _syncTemplatesFromSupabase();
+      if (!synced) {
+        const savedTemplates = _loadLS('fg_templates');
+        appState.templates = (savedTemplates && savedTemplates.length) ? savedTemplates : DEMO_TEMPLATES;
+        _saveLS('fg_templates', appState.templates);
+      }
     }
-    appState.workflows = _loadLS('fg_workflows') || [];
+    // Workflows direkt aus Supabase laden, Fallback auf localStorage
+    {
+      const wfSynced = await _syncWorkflowsFromSupabase();
+      if (!wfSynced) {
+        appState.workflows = _loadLS('fg_workflows') || [];
+      }
+    }
     renderDashboard();
 
     // Realtime aufbauen
     setupRealtime();
 
-    // Vollsync im Hintergrund
-    setTimeout(() => _syncFromSupabase(), 800);
-    setTimeout(() => loadTextblocksFromSupabase(), 400);
+    loadTextblocksFromSupabase();
 
     updateSyncStatus('ok');
 
