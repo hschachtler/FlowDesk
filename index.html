@@ -2515,16 +2515,32 @@ async function _syncTemplatesFromSupabase() {
   let tResult;
   try {
     tResult = await _sb.from('templates').select('*, template_steps(*)').order('created_at');
-  } catch(e) { return false; }
-  if (tResult && !tResult.error && tResult.data && tResult.data.length > 0) {
-    appState.templates = tResult.data.map(t => ({
-      ...t,
-      steps: (t.template_steps||[]).sort((a,b)=>a.step_order-b.step_order).map(s=>({...s,fields:s.fields||[]}))
-    }));
-    _saveLS('fg_templates', appState.templates);
-    return true;
+  } catch(e) {
+    console.warn('_syncTemplatesFromSupabase exception:', e.message);
+    return false;
   }
-  return false;
+  // Echter Fehler (Netzwerk, RLS, fehlende Tabelle) → false, lokaler Cache bleibt.
+  if (!tResult || tResult.error) {
+    if (tResult?.error) {
+      const code = tResult.error.code || '';
+      if (code === '42P01' || /does not exist/i.test(tResult.error.message || '')) {
+        console.log('ℹ️ templates-Tabelle fehlt – lokaler Fallback');
+      } else {
+        console.warn('_syncTemplatesFromSupabase:', tResult.error.message);
+      }
+    }
+    return false;
+  }
+  // Server hat geantwortet (auch mit leerer Liste) → Server ist die Wahrheit.
+  // Auch eine leere Antwort wird übernommen, sonst bleibt ein veralteter
+  // localStorage-Cache stehen, wenn alle Vorlagen serverseitig gelöscht wurden.
+  const rows = tResult.data || [];
+  appState.templates = rows.map(t => ({
+    ...t,
+    steps: (t.template_steps||[]).sort((a,b)=>a.step_order-b.step_order).map(s=>({...s,fields:s.fields||[]}))
+  }));
+  _saveLS('fg_templates', appState.templates);
+  return true;
 }
 
 /** Workflows direkt aus Supabase laden – primäre Datenquelle, kein setTimeout-Delay */
